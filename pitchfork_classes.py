@@ -1,3 +1,6 @@
+import discogs_client
+import pitchfork
+
 class Database:
     def __init__(self, mydb):
         self.mydb = mydb
@@ -26,3 +29,35 @@ class Database:
 
         for x in self.mycursor:
             print(x)
+    
+    def delete_table(self):
+        self.mycursor.execute("DROP TABLE IF EXISTS reviews")
+
+class Review:
+    def __init__(self, app_name, user_token): 
+        self.app_name = app_name
+        self.user_token = user_token
+
+    def request_review(self, album_name):
+        d = discogs_client.Client(self.app_name, user_token = self.user_token)
+
+        results = d.search(album_name, type='release')
+        search_results = []
+        if results.pages < 1:
+            print("Could not find album.")
+        else:
+            artist = results[0].artists[0]
+            artist_name = artist.name
+
+            try:
+                p = pitchfork.search(artist_name, album_name)
+                seach_results = [artist_name, p.album(), p.label(), p.score()]
+            except IndexError:
+                print("Could not find album.")
+                continue
+            
+        return search_results
+
+
+            
+            

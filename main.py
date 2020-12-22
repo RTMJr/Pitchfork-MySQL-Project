@@ -14,9 +14,5 @@ db.create_database()
 db.use_database()
 
 db.create_table()
-db.show_tables()
-
-
-
 
 
