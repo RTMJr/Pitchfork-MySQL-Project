@@ -8,5 +8,3 @@ mydb = mysql.connector.connect(
     password=config.password
 )
 
-print(mydb)
-
