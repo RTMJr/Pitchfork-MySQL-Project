@@ -15,4 +15,9 @@ db.use_database()
 
 db.create_table()
 
+r = Review(config.app_name, config.user_token)
+
+results = r.request_review("reasonable doubt")
+
+db.insert_into_database(results)
 
