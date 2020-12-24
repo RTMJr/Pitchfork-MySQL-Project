@@ -39,12 +39,14 @@ class Database:
             "SELECT name, album, COUNT(*) FROM reviews WHERE name = %s AND album = %s", (results[0], results[1]))
         db_results = self.mycursor.fetchall()
         if db_results[0][2] > 0:
+            print("Album already in database.")
             return
 
         if len(results) > 0:
             sql = "INSERT INTO reviews (name, album, label, score) VALUES (%s, %s, %s, %s)"
             val = tuple(results)
             self.mycursor.execute(sql, val)
+            print("Album inserted into database")
 
             self.mydb.commit()
 

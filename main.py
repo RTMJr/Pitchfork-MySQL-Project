@@ -17,7 +17,8 @@ db.create_table()
 
 r = Review(config.app_name, config.user_token)
 
-results = r.request_review("reasonable doubt")
+results = r.request_review("illmatic")
 
-db.insert_into_database(results)
+if len(results) > 0:
+    db.insert_into_database(results)
 
