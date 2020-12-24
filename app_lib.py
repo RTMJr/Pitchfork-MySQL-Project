@@ -84,7 +84,7 @@ class Review:
         return search_results
 
 def main():
-    # connect to database
+    # connect to mysql server 
     mydb = mysql.connector.connect(
         host=config.host,
         user=config.user,
