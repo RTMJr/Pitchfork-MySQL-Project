@@ -1,6 +1,6 @@
 import discogs_client
 import pitchfork
-from . import config
+from . import config # change example_config.py to config.py and input info into file
 import mysql.connector
 
 class Database:
