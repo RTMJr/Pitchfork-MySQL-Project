@@ -15,7 +15,7 @@ def main():
     db.create_table()
 
     r = Review(config.app_name, config.user_token)
-    album = str(input("Enter album name: ")
+    album = str(input("Enter album name: "))
     review = r.request_review(album)
 
     if len(review) > 0:
