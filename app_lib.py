@@ -1,5 +1,6 @@
 import discogs_client
 import pitchfork
+import config
 
 class Database:
     def __init__(self, mydb):
@@ -76,3 +77,16 @@ class Review:
                 pass
             
         return search_results
+
+def main(mydb):
+    db = Database(mydb)
+    db.create_database()
+    db.use_database()
+    db.create_table()
+
+    r = Review(config.app_name, config.user_token)
+    album = str(input("Enter album name: "))
+    review = r.request_review(album)
+
+    if len(review) > 0:
+        db.insert_into_database(review)

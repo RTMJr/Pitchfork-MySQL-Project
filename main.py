@@ -8,18 +8,5 @@ mydb = mysql.connector.connect(
     password=config.password,
 )
 
-def main():
-    db = Database(mydb)
-    db.create_database()
-    db.use_database()
-    db.create_table()
-
-    r = Review(config.app_name, config.user_token)
-    album = str(input("Enter album name: "))
-    review = r.request_review(album)
-
-    if len(review) > 0:
-        db.insert_into_database(review)
-
 if __name__ == "__main__":
-    main()
+    main(mydb)
