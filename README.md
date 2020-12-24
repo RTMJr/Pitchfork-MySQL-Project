@@ -13,4 +13,5 @@ The update\_certificates.py file must be executed prior to using main.py
 each user session.
 
 Lastly, application variables must be placed into the config file in order for
-the app to function.
+the app to function - MySQL client info, and when using discogs client you must
+name your app, and generate a user token (see discogs client link in this README).
