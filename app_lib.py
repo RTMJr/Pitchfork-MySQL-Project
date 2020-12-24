@@ -1,6 +1,7 @@
 import discogs_client
 import pitchfork
 import config
+import mysql.connector
 
 class Database:
     def __init__(self, mydb):
@@ -42,12 +43,12 @@ class Database:
         if db_results[0][2] > 0:
             print("Album already in database.")
             return
-
+        # insert into database if review contains information
         if len(review) > 0:
             sql = "INSERT INTO reviews (name, album, label, score) VALUES (%s, %s, %s, %s)"
             val = tuple(review)
             self.mycursor.execute(sql, val)
-            print("Album inserted into database")
+            print("Album inserted into database.")
 
             self.mydb.commit()
 
@@ -57,16 +58,20 @@ class Review:
         self.user_token = user_token
 
     def request_review(self, album_name):
+        # connect to Discogs
         d = discogs_client.Client(self.app_name, user_token=self.user_token)
 
+        # search Discogs for album
         results = d.search(album_name, type='release')
         search_results = []
         if len(results) == 0:
             print("Could not find album.")
         else:
+            # extract artist's name
             artist = results[0].artists[0]
             artist_name = artist.name
             try:
+                # search Pitchfork for review
                 p = pitchfork.search(artist_name, album_name)
                 search_results.append(artist_name)
                 search_results.append(p.album())
@@ -78,15 +83,25 @@ class Review:
             
         return search_results
 
-def main(mydb):
+def main():
+    # connect to database
+    mydb = mysql.connector.connect(
+        host=config.host,
+        user=config.user,
+        password=config.password,
+    )
+
+    # create and use database
     db = Database(mydb)
     db.create_database()
     db.use_database()
     db.create_table()
 
+    # create Review object, get album name from user, and search for review
     r = Review(config.app_name, config.user_token)
     album = str(input("Enter album name: "))
     review = r.request_review(album)
 
+    # if review exists, insert into database
     if len(review) > 0:
         db.insert_into_database(review)
