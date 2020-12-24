@@ -7,7 +7,7 @@ created called pitchfork. The table that is created is called reviews.
 
 The dependencies for this application are the python 
 [discogs](https://github.com/joalla/discogs_client) client, the mysql package, 
-and the [pitchfor python api](https://pypi.org/project/pitchfork/). 
+and the [pitchfork python api](https://pypi.org/project/pitchfork/). 
 
 The update\_certificates.py file must be executed prior to using main.py
 each user session.
