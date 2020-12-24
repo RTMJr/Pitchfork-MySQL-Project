@@ -1,6 +1,6 @@
 import discogs_client
 import pitchfork
-import config
+from . import config
 import mysql.connector
 
 class Database:
