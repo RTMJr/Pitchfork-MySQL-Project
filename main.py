@@ -1,6 +1,6 @@
 import mysql.connector
 import config
-from pitchfork_classes import *
+from app_lib import *
 
 mydb = mysql.connector.connect(
     host=config.host,
@@ -8,17 +8,18 @@ mydb = mysql.connector.connect(
     password=config.password,
 )
 
-db = Database(mydb)
+def main():
+    db = Database(mydb)
+    db.create_database()
+    db.use_database()
+    db.create_table()
 
-db.create_database()
-db.use_database()
+    r = Review(config.app_name, config.user_token)
+    album = str(input("Enter album name: ")
+    review = r.request_review(album)
 
-db.create_table()
+    if len(review) > 0:
+        db.insert_into_database(review)
 
-r = Review(config.app_name, config.user_token)
-
-results = r.request_review("illmatic")
-
-if len(results) > 0:
-    db.insert_into_database(results)
-
+if __name__ == "__main__":
+    main()
