@@ -1,7 +1,7 @@
 # Pitchfork-MySQL-Project
 
 This project extracts albums entered by the user at the command line and 
-and searches for their review on [Pitchfork](Pitchfork.com). If the
+and searches for their review on [Pitchfork](https://pitchfork.com/). If the
 review exists, it loads the review information into a MySQL database that is
 created called pitchfork. The table that is created is called reviews.
 
